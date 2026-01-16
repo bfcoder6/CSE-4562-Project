@@ -13,3 +13,5 @@ setup_repo.sh
 /.nfs*
 /data
 compile_commands.json
+.cache
+submission.txt

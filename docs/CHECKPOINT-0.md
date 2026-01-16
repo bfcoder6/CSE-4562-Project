@@ -1,5 +1,21 @@
 ## CSE 4/562 - Checkpoint 0
 
+Welcome to CSE462/562. In this semester long course project, you will build a
+mini database systems in the TDB (Taco-DB) framework. This readme contains
+a brief description of how to set up the build environment, compile and test
+the system. Please refer to the [course
+website](https://odin.cse.buffalo.edu/teaching/cse-4562/) for
+lab-specific instructions.
+
+We have extensively tested the source code in the lab distribution but there
+could inevitably be bugs as in any project. To report a BUG, please post a
+**private** message in the Piazza to all TA and the
+instructor. It will made public once validated. Please refer to the course
+website for the policy of getting extra credit for successful reporting of
+bugs.
+
+#### Overview
+
 In this checkpoint, you will:
 - Form groups
 - Ensure that you have a group GIT repository properly set up for code submission
@@ -39,4 +55,84 @@ The setup script will perform the necessary configuration.  You will need to rep
 
 Once the script completes, a copy of the repository should now be mirrored into the repository you set up.  Everyone else on your team should now be able to fetch the *Github* or *Codeberg* repository you created.  From now on, you will be able to just use this repository.
 
-#### Instructions
+#### Dependencies and system requirements
+
+git, cmake >= 3.13, pkg-config (0.29 recommended; <= 0.25 will make the build
+extremely slow), c11 and c++17 compilers, e.g., gcc >= 7 or clang,
+make, autoconf (for jemalloc), python3, and gtest
+
+We recommend using recent Linux distributions on x86_64 platform. It's known to
+work on Ubuntu 20.04 (and above) and Fedora 35 (and above) with gcc/clang.  It
+might not work as intended or is known to not work on other systems even if it
+compiles. The following is a non-exhaustive list:
+
+- OS: Mac OS, Windows WSL1, Cygwin, MSYS, Win32
+- Non-x86_64: Apple laptops with M1 processor,
+  Microsoft Surface Pro X with SQ1 or SQ2
+
+On a recent Debian-based linux distribution (including Debian, Ubuntu, Mint, PopOS, and WSL-Ubuntu), you can install the necessary dependencies with:
+```bash
+sudo apt install cmake libjemalloc-dev googletest libgtest-dev libgmock-dev
+```
+
+#### How to build
+
+To create a debug build in build/ directory, run
+
+```bash
+cmake -B build
+```
+
+Once you've used cmake to configure your project, you can use make to compile your project:
+```bash
+make -C build taco
+```
+The binary will be deposited in `build/bin/taco`
+
+As we get further into the project, you will want to also build in release mode.  The resulting binaries and tests will not include debug symbols (they'll be harder to debug), but will be more representative of the performance you will get when uploading to autolab.  To create a release build, run 
+
+```bash
+cmake -DCMAKE_BUILD_TYPE=Release -B build.release
+```
+
+Now, you will be able to compile tacodb with
+```bash
+make -C build.release taco
+```
+
+#### How to test your implementation
+
+We use the [GoogleTest](http://google.github.io/googletest/) framework with its
+community supported integration
+[ctest](https://cmake.org/cmake/help/latest/manual/ctest.1.html). For advanced usages,
+please review those documentations.
+
+To run all tests, in your root directory, run:
+```bash
+make -C build test
+```
+Replace `build` with `build.release`, as before, to test a release build.
+
+You can also run tests one at a time with
+```bash
+./build/tests/path-to-some-test
+```
+
+To list the project specific flags, run
+
+```bash
+./build/tests/path-to-some-test --help
+```
+
+#### Submission
+
+Make sure that *all* of your team members are able to compile and run the test case provided with checkpoint 0.  Once
+you have done this, you should make sure that the repository is properly committed and run:
+
+```bash
+make -C build taco
+./build/bin/taco
+```
+
+This will generate a file `submission.json` in your directory.  Upload this file to autolab.  Once autolab confirms that
+it is able to access your repository, you have completed checkpoint 0.

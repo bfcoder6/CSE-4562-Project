@@ -20,6 +20,10 @@ if(NOT CMAKE_BUILD_TYPE)
   message(NOTICE "-- No build mode chosen - using Debug by default")
 endif(NOT CMAKE_BUILD_TYPE)
 
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/build)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/build)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+
 # find a few programs
 
 find_program(SHELL bash)
@@ -43,7 +47,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 ## disable strict aliasing
 if("${CMAKE_BUILD_TYPE}x" STREQUAL "Debugx")
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O0 -g2 -Wall -Wextra -Wno-unused-parameter -fno-omit-frame-pointer")
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O0 -g2 -Wall -Wextra -Wno-unused-parameter -fno-omit-frame-pointer -fPIC -lgtest")
 else()
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3")
 endif()
@@ -145,9 +149,9 @@ set(ABSL_TARGET_NAMES
 find_package(GTest CONFIG)
 if (GTest_FOUND)
     get_target_property(GTest_is_pic GTest::gtest POSITION_INDEPENDENT_CODE)
-    if (NOT GTest_is_pic)
-        message(FATAL_ERROR "GoogleTest found at the default location is not a shared lib")
-    endif()
+    # if (NOT GTest_is_pic)
+    #     message(FATAL_ERROR "GoogleTest found at the default location is not a shared lib")
+    # endif()
 else()
     message(FATAL_ERROR "unable to find GoogleTest")
 endif()
