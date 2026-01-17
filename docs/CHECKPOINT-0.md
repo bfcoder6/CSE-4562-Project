@@ -21,6 +21,11 @@ In this checkpoint, you will:
 - Ensure that you have a group GIT repository properly set up for code submission
 - Ensure that you are able to compile and run code.
 
+#### Links
+
+* [This Readme](https://git.odin.cse.buffalo.edu/CSE-4562/2026-sp-project/src/branch/main/docs/CHECKPOINT-0.md)
+* [Autolab Submission](https://autolab.cse.buffalo.edu/courses/cse462-s26/assessments/Checkpoint-0-Setup)
+
 #### Initial Setup
 
 **One** of your team should follow the initial setup instructions.  You may use *either* [Codeberg](https://codeberg.org) *or* [GitHub](https://github.com) to share code within your project group.  You will need to set up a new repository in either one and ensure that it is private except for your team, and that the accounts `ubodin-cse-grader` and `okennedy` have read access.
