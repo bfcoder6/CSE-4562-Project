@@ -42,7 +42,7 @@ In this checkpoint, you will:
 * Once the repository is created, take a note of your `SSH_URL` (needed later) is in the box to the upper left of the file list.  This is the string starting with `ssh://git@github.org/...`.  Make sure it starts with `ssh` and not `https`
 * Go to the "Settings" tab and the "Collaborators" item (below "Access").
 * Use "Add people" to find and add each of your team members.
-* Use "Add people" to find and add `ubodin-cse-grader` and `okenendy`.  These accounts will only need `Read` level access.
+* Use "Add people" to find and add `ubodin-cse-grader` and `okennedy`.  These accounts will only need `Read` level access.
 
 Regardless of which hosting service you use, the following steps will prepare the repository you created for use with this project.  As before **one** of your team should follow these steps.
 
