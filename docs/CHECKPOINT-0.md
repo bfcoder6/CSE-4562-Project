@@ -77,7 +77,7 @@ compiles. The following is a non-exhaustive list:
 
 On a recent Debian-based linux distribution (including Debian, Ubuntu, Mint, PopOS, and WSL-Ubuntu), you can install the necessary dependencies with:
 ```bash
-sudo apt install cmake libjemalloc-dev googletest libgtest-dev libgmock-dev
+sudo apt install cmake libjemalloc-dev libabsl-dev pkg-config cmake-data build-essential
 ```
 
 #### How to build
