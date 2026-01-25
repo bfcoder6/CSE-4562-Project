@@ -149,12 +149,24 @@ set(ABSL_TARGET_NAMES
 
 # adding the GoogleTest module for gtest_add_test()
 # https://github.com/google/googletest/archive/03597a01ee50ed33e9dfd640b249b4be3799d395.zip
+#
+# Also see:
+# https://cmake.org/cmake/help/latest/policy/CMP0135.html
+# DOWNLOAD_EXTRACT_TIMESTAMP needs to be provided for newer versions, while older versions
+# complain about its presence and fail the build
 include(FetchContent)
-FetchContent_Declare(
-  googletest
-  URL https://github.com/google/googletest/archive/refs/tags/release-1.11.0.zip
-  DOWNLOAD_EXTRACT_TIMESTAMP NEW
-)
+if(CMAKE_VERSION VERSION_LESS "3.24.0") 
+    FetchContent_Declare(
+      googletest
+      URL https://github.com/google/googletest/archive/refs/tags/release-1.11.0.zip
+    )
+else()
+    FetchContent_Declare(
+      googletest
+      URL https://github.com/google/googletest/archive/refs/tags/release-1.11.0.zip
+      DOWNLOAD_EXTRACT_TIMESTAMP NEW
+    )
+endif()
 
 FetchContent_MakeAvailable(googletest)
 
