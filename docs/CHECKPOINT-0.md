@@ -139,5 +139,5 @@ make -C build taco
 ./build/bin/taco
 ```
 
-This will generate a file `submission.json` in your directory.  Upload this file to autolab.  Once autolab confirms that
+This will generate a file `submission.txt` in your directory.  Upload this file to autolab.  Once autolab confirms that
 it is able to access your repository, you have completed checkpoint 0.
