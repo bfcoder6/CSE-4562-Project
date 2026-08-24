@@ -112,6 +112,12 @@ public:
 
 private:
     // TODO implement it
+    bool isOpened;
+    size_t fsize = 0;
+    std::string path;
+    int file_descriptor;
+    int flags;
+    mode_t mode;
 };
 
 /*!
