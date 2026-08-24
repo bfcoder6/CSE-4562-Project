@@ -1,6 +1,6 @@
 # CMakeLists.txt
 
-cmake_minimum_required(VERSION 3.13)
+cmake_minimum_required(VERSION 3.14)
 
 find_package(PkgConfig REQUIRED)
 include(CheckCXXSourceCompiles)
@@ -23,6 +23,7 @@ endif(NOT CMAKE_BUILD_TYPE)
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/build)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/build)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+set(BUILD_SHARED_LIBS ON)
 
 # find a few programs
 
@@ -47,9 +48,9 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 ## disable strict aliasing
 if("${CMAKE_BUILD_TYPE}x" STREQUAL "Debugx")
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O0 -g2 -Wall -Wextra -Wno-unused-parameter -fno-omit-frame-pointer -fPIC -lgtest")
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O0 -g2 -Wall -Wextra -Wno-unused-parameter -fno-omit-frame-pointer -fPIC")
 else()
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3")
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3 -fPIC")
 endif()
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fno-strict-aliasing")
 ## disable warning about missing fields in an aggregate initializer
@@ -146,15 +147,42 @@ set(ABSL_TARGET_NAMES
     str_format
 )
 
-find_package(GTest CONFIG)
-if (GTest_FOUND)
-    get_target_property(GTest_is_pic GTest::gtest POSITION_INDEPENDENT_CODE)
-    # if (NOT GTest_is_pic)
-    #     message(FATAL_ERROR "GoogleTest found at the default location is not a shared lib")
-    # endif()
+# adding the GoogleTest module for gtest_add_test()
+# https://github.com/google/googletest/archive/03597a01ee50ed33e9dfd640b249b4be3799d395.zip
+#
+# Also see:
+# https://cmake.org/cmake/help/latest/policy/CMP0135.html
+# DOWNLOAD_EXTRACT_TIMESTAMP needs to be provided for newer versions, while older versions
+# complain about its presence and fail the build
+include(FetchContent)
+if(CMAKE_VERSION VERSION_LESS "3.24.0") 
+    FetchContent_Declare(
+      googletest
+      URL https://github.com/google/googletest/archive/refs/tags/release-1.11.0.zip
+    )
 else()
-    message(FATAL_ERROR "unable to find GoogleTest")
+    FetchContent_Declare(
+      googletest
+      URL https://github.com/google/googletest/archive/refs/tags/release-1.11.0.zip
+      DOWNLOAD_EXTRACT_TIMESTAMP NEW
+    )
 endif()
+
+FetchContent_MakeAvailable(googletest)
+
+# The following lines add the system native google test... but this is apparently not
+# kosher, per:
+# https://groups.google.com/g/googletestframework/c/LGVrYGnKlHM
+
+# find_package(GTest CONFIG)
+# if (GTest_FOUND)
+#     get_target_property(GTest_is_pic GTest::gtest POSITION_INDEPENDENT_CODE)
+#     if (NOT GTest_is_pic)
+#         message(FATAL_ERROR "GoogleTest found at the default location is not a shared lib")
+#     endif()
+# else()
+#     message(FATAL_ERROR "unable to find GoogleTest")
+# endif()
 
 find_package(absl CONFIG)
 if (absl_FOUND)
@@ -175,7 +203,6 @@ link_libraries(${ABSL_TARGETS})
 link_libraries(GTest::gtest)
 link_libraries(GTest::gmock)
 
-# adding the GoogleTest module for gtest_add_test()
 include(GoogleTest)
 
 # Taco-DB project configuration

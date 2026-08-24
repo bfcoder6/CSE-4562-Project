@@ -21,6 +21,11 @@ In this checkpoint, you will:
 - Ensure that you have a group GIT repository properly set up for code submission
 - Ensure that you are able to compile and run code.
 
+#### Links
+
+* [This Readme](https://git.odin.cse.buffalo.edu/CSE-4562/2026-sp-project/src/branch/main/docs/CHECKPOINT-0.md)
+* [Autolab Submission](https://autolab.cse.buffalo.edu/courses/cse462-s26/assessments/Checkpoint-0-Setup)
+
 #### Initial Setup
 
 **One** of your team should follow the initial setup instructions.  You may use *either* [Codeberg](https://codeberg.org) *or* [GitHub](https://github.com) to share code within your project group.  You will need to set up a new repository in either one and ensure that it is private except for your team, and that the accounts `ubodin-cse-grader` and `okennedy` have read access.
@@ -37,7 +42,7 @@ In this checkpoint, you will:
 * Once the repository is created, take a note of your `SSH_URL` (needed later) is in the box to the upper left of the file list.  This is the string starting with `ssh://git@github.org/...`.  Make sure it starts with `ssh` and not `https`
 * Go to the "Settings" tab and the "Collaborators" item (below "Access").
 * Use "Add people" to find and add each of your team members.
-* Use "Add people" to find and add `ubodin-cse-grader` and `okenendy`.  These accounts will only need `Read` level access.
+* Use "Add people" to find and add `ubodin-cse-grader` and `okennedy`.  These accounts will only need `Read` level access.
 
 Regardless of which hosting service you use, the following steps will prepare the repository you created for use with this project.  As before **one** of your team should follow these steps.
 
@@ -72,7 +77,7 @@ compiles. The following is a non-exhaustive list:
 
 On a recent Debian-based linux distribution (including Debian, Ubuntu, Mint, PopOS, and WSL-Ubuntu), you can install the necessary dependencies with:
 ```bash
-sudo apt install cmake libjemalloc-dev googletest libgtest-dev libgmock-dev
+sudo apt install cmake libjemalloc-dev libabsl-dev pkg-config cmake-data build-essential
 ```
 
 #### How to build
@@ -134,5 +139,5 @@ make -C build taco
 ./build/bin/taco
 ```
 
-This will generate a file `submission.json` in your directory.  Upload this file to autolab.  Once autolab confirms that
+This will generate a file `submission.txt` in your directory.  Upload this file to autolab.  Once autolab confirms that
 it is able to access your repository, you have completed checkpoint 0.
